@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>資産格差シミュレーション</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        #canvas-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .controls {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 200px;
+            margin-right: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input[type="range"] {
+            width: 200px;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #1a1a1a;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">資産格差シミュレーション</h1>
+    <div id="canvas-container"></div>
+    <div class="controls">
+        <div class="control-group">
+            <button onclick="resetSimulation()">リセット</button>
+            <button onclick="togglePause()">一時停止/再開</button>
+        </div>
+        <div class="control-group">
+            <label>人口:</label>
+            <input type="range" id="population" min="50" max="500" value="200" oninput="updateLabel('population')">
+            <span id="population-label">200</span>
+        </div>
+        <div class="control-group">
+            <label>初期資産:</label>
+            <input type="range" id="initialWealth" min="50" max="200" value="100" oninput="updateLabel('initialWealth')">
+            <span id="initialWealth-label">100</span>
+        </div>
+        <div class="control-group">
+            <label>取引確率:</label>
+            <input type="range" id="tradeProbability" min="0" max="100" value="20" oninput="updateLabel('tradeProbability')">
+            <span id="tradeProbability-label">20%</span>
+        </div>
+        <div class="control-group">
+            <label>取引額の最大比率:</label>
+            <input type="range" id="tradeAmount" min="1" max="50" value="10" oninput="updateLabel('tradeAmount')">
+            <span id="tradeAmount-label">10%</span>
+        </div>
+        <div class="stats">
+            <h3>統計情報</h3>
+            <p>ジニ係数: <span id="gini">0.00</span></p>
+            <p>最富裕層(上位10%)の資産割合: <span id="top10">0.0%</span></p>
+            <p>最貧困層(下位10%)の資産割合: <span id="bottom10">0.0%</span></p>
+            <p>平均資産: <span id="avgWealth">0</span></p>
+            <p>中央値: <span id="medianWealth">0</span></p>
+        </div>
+    </div>
+    <script src="sketch.js"></script>
+</body>
+</html>
